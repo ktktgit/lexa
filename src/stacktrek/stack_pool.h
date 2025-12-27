@@ -63,8 +63,8 @@ char* GC_get_main_stack_sp() {
 #define STACK_SIZE (BLOCK_SIZE - 64 * MP_KIB)
 #define CACHE_MAX_SIZE 16
 
-static mp_gstack_t *cache = NULL;
-static int cache_size = 0;
+static __thread mp_gstack_t *cache = NULL;
+static __thread int cache_size = 0;
 
 void init_stack_pool() {
     init_system_stack_bounds();
