@@ -31,13 +31,15 @@ def run_commands(source_file, output_file, lexac_args, output_ll, tl, stack_size
     include_paths = ["-I", os.path.dirname(os.path.realpath(__file__)) + "/src/stacktrek", "-I", os.path.dirname(src_path), "-I", os.path.dirname(os.path.realpath(__file__)) + "/src/stackwalk"]
 
     if output_ll:
-        clang_ll_command = ["clang", "-S", "-emit-llvm", "-O3", c_file, "-o", source_file.split(".")[0] + ".ll", "-DNO_OFFSET"] + include_paths
+        # clang_ll_command = ["clang", "-S", "-emit-llvm", "-O3", c_file, "-o", source_file.split(".")[0] + ".ll", "-DNO_OFFSET"] + include_paths
+        clang_ll_command = ["clang", "-S", "-emit-llvm", "-O2", c_file, "-o", source_file.split(".")[0] + ".ll", "-DNO_OFFSET"] + include_paths
         for path in passes:
             clang_ll_command += ["-Xclang", "-fpass-plugin=" + os.path.dirname(os.path.realpath(__file__)) + "/passes/" + path]
         subprocess.run(clang_ll_command, check=True)
 
     compilation_unit = [c_file, os.path.dirname(os.path.realpath(__file__)) + "/src/stackwalk/stackwalk.c"]
-    clang_command = ["clang", "-g", "-O3", "-o", output_file, "-lm", "-lgc", "-Wl,--section-start=.init=0x2000"] + compilation_unit + include_paths # -Wl,--section-start=.init=0x2000 is to make sure the code has a fixed address. This is not necessary when offset_functions.h is created automatically.
+    # clang_command = ["clang", "-g", "-O3", "-o", output_file, "-lm", "-lgc", "-Wl,--section-start=.init=0x2000"] + compilation_unit + include_paths # -Wl,--section-start=.init=0x2000 is to make sure the code has a fixed address. This is not necessary when offset_functions.h is created automatically.
+    clang_command = ["clang", "-g", "-O2", "-o", output_file, "-lm", "-lgc", "-Wl,--section-start=.init=0x2000"] + compilation_unit + include_paths # -Wl,--section-start=.init=0x2000 is to make sure the code has a fixed address. This is not necessary when offset_functions.h is created automatically.
     for path in passes:
         clang_command += ["-Xclang", "-fpass-plugin=" + os.path.dirname(os.path.realpath(__file__)) + "/passes/" + path]
     
