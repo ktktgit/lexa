@@ -40,8 +40,8 @@ stdenv.mkDerivation (finalAttrs: {
     src = fetchFromGitHub {
         owner = "ktktgit";
         repo = "libmprompt";
-        rev = "my-base";
-        sha256 = "sha256-oAz2fvi3YlMD4EkYKq0pimmU2ZJsPVb97zt3ZXvswlI=";
+        rev = "742c3c1874e84810c7dfb3444a575e85e4164c79";
+        sha256 = "sha256-m/mD13jR2K7cn+YBDq7KSHHB1QJ/i4dLE0jAgIDlk1E=";
     };
 
     patches = [ ./libmprompt.patch ];

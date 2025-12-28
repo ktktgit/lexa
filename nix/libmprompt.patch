@@ -2101,8 +2101,8 @@ index 071f6f1..c446faa 100644
  static ssize_t os_gstack_gap              = 64 * MP_KIB;   // noaccess gap between stacks; `os_gstack_gap > min(64*1024, os_page_size, os_gstack_size/2`.
  static bool    os_gstack_reset_decommits  = false;         // force full decommit when resetting a stack?
  static bool    os_gstack_grow_fast        = true;          // use doubling to grow gstacks (up to 1MiB)
--static ssize_t os_gstack_cache_max_count  = 4;             // number of prompts to keep in the thread local cache
-+static ssize_t os_gstack_cache_max_count  = 16;             // number of prompts to keep in the thread local cache
+-static ssize_t os_gstack_cache_max_count  = 1024;             // number of prompts to keep in the thread local cache
++static ssize_t os_gstack_cache_max_count  = 1024;             // number of prompts to keep in the thread local cache
  static ssize_t os_gstack_exn_guaranteed   = 32 * MP_KIB;   // guaranteed stack size available during an exception unwind (only used on Windows)
  
  #if defined(_MSC_VER) && !defined(NDEBUG)  // gpool a tad smaller in msvc so debug traces work (as the gpool can be placed lower than the system stack)
